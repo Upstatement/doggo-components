@@ -6,14 +6,33 @@ class DoggyDog extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('🐶');
+    console.log('Come here, pups! 🐶');
     
-    switch(this.type) {
+    const shadowRoot = this.attachShadow({ mode: 'open' });
+    this.shadow = shadowRoot;
+
+    this.createStyles();
+    this.setupImage();
+  }
+  
+  disconnectedCallback() {
+    console.log('👋 🐶');
+  }
+
+  /**
+   * We create the actual image element and append it to our shadow dom
+   * We look at the type specified to find the appropriate adorable picture
+   */
+  setupImage() {
+    switch (this.type) {
       case 'pup':
         this.imageURL = 'https://cdn1-www.dogtime.com/assets/uploads/2011/03/puppy-development.jpg';
         break;
       case 'pupper':
         this.imageURL = 'https://blog-cdn.dogbuddy.com/wp-content/uploads/2017/03/cute-puppy-1.png';
+        break;
+      case 'pupperino':
+        this.imageURL = 'https://cdn-az.allevents.in/banners/a98430341596f2c6938e1d6075774190';
         break;
       case 'doge':
         this.imageURL = 'https://images-na.ssl-images-amazon.com/images/I/81-yKbVND-L._SY355_.png';
@@ -28,21 +47,19 @@ class DoggyDog extends HTMLElement {
         this.imageURL = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-dog-royalty-free-image-505534037-1565105327.jpg';
     }
 
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    this.shadow = shadowRoot;
-
-    this.createStyles();
-
     const image = new Image();
     image.src = this.imageURL;
     image.classList.add(this.action);
-    shadowRoot.appendChild(image);
-  }
-  
-  disconnectedCallback() {
-    console.log('👋 🐶');
+    this.shadow.appendChild(image);
   }
 
+  /**
+   * Create the styles for our doggos
+   * We do this as a normal string rather than using @import
+   * since it is not supported in all browsers
+   * 
+   * (same for new CSSStyleSheet, which is only supported in Chrome)
+   */
   createStyles() {
     const styleTemplate = `
     <style>
@@ -82,6 +99,9 @@ class DoggyDog extends HTMLElement {
   }
 };
 
+/**
+ * Register our custom element
+ */
 window.addEventListener('DOMContentLoaded', () => {
   customElements.define('doggy-dog', DoggyDog);
 });
