@@ -12,10 +12,10 @@ A browser later than Internet Explore 11!
 
 ## Installation
 
-Simple add this script to your website!
+Simply add this script to your website!
 `<script src="https://upstatement.github.io/doggo-components/components.js"></script>`
 
-Then you can add floofs and snoops to your website to make it even better!
+Then you can add floofs and snoops to your site to make it even better!
 `<doggy-dog type="floof" action="growl"></doggy-dog>`
 
 ## Code of Conduct
