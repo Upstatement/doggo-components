@@ -8,9 +8,7 @@ class DoggyDog extends HTMLElement {
   connectedCallback() {
     console.log('Come here, pups! 🐶');
     
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    this.shadow = shadowRoot;
-
+    this.shadow = this.attachShadow({ mode: 'open' });
     this.createStyles();
     this.setupImage();
   }
@@ -46,11 +44,19 @@ class DoggyDog extends HTMLElement {
       default:
         this.imageURL = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-dog-royalty-free-image-505534037-1565105327.jpg';
     }
+    this.removeExistingImage();
 
     const image = new Image();
     image.src = this.imageURL;
     image.classList.add(this.action);
     this.shadow.appendChild(image);
+  }
+
+  removeExistingImage() {
+    const existingImage = this.shadow.querySelector('img');
+    if (existingImage) {
+      this.shadow.removeChild(existingImage);
+    }
   }
 
   /**
