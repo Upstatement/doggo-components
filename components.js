@@ -6,7 +6,7 @@ class DoggyDog extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('Come here, pups! 🐶');
+    console.log(`Come here, ${this.type}! 🐶`);
     
     this.shadow = this.attachShadow({ mode: 'open' });
     this.createStyles();
@@ -25,8 +25,13 @@ class DoggyDog extends HTMLElement {
     this[name] = newValue;
     if (name === 'command') {
       console.warn(`Ok ${this.type}, ${newValue}!`);
-      image.classList.remove(oldValue);
-      image.classList.add(newValue);
+      if (oldValue) {
+        image.classList.remove(oldValue);
+      }
+
+      if (newValue) {
+        image.classList.add(newValue);
+      }
     } else if (name === 'type') {
       console.warn(`Come here, ${this.type}!`);
       this.shadow.removeChild(image);
@@ -62,6 +67,9 @@ class DoggyDog extends HTMLElement {
       case 'floof':
         this.imageURL = 'https://pbs.twimg.com/profile_images/1070961472342155264/2bcbqQvH_400x400.jpg';
         break;
+      case 'kitty':
+        this.imageURL = 'https://st.depositphotos.com/1606449/3372/i/950/depositphotos_33722805-stock-photo-puppy-wearing-cat-ears-for.jpg';
+        break;
       default:
         this.imageURL = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-dog-royalty-free-image-505534037-1565105327.jpg';
     }
@@ -69,7 +77,6 @@ class DoggyDog extends HTMLElement {
 
     const image = new Image();
     image.src = this.imageURL;
-    console.log(this.command);
     image.classList.add(this.command);
     this.shadow.appendChild(image);
   }
