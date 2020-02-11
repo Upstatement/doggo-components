@@ -70,6 +70,9 @@ class DoggyDog extends HTMLElement {
       case 'kitty':
         this.imageURL = 'https://st.depositphotos.com/1606449/3372/i/950/depositphotos_33722805-stock-photo-puppy-wearing-cat-ears-for.jpg';
         break;
+      case 'bunny':
+        this.imageURL = 'https://petcostumecenter.com/wp-content/uploads/2018/06/dog-bunny-ears.jpg';
+        break;
       default:
         this.imageURL = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-dog-royalty-free-image-505534037-1565105327.jpg';
     }
