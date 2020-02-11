@@ -16,7 +16,7 @@ Simply add this script to your website!
 `<script src="https://upstatement.github.io/doggo-components/components.js"></script>`
 
 Then you can add floofs and snoops to your site to make it even better!
-`<doggy-dog type="floof" action="growl"></doggy-dog>`
+`<doggy-dog type="floof" command="growl"></doggy-dog>`
 
 ## Code of Conduct
 

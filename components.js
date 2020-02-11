@@ -2,7 +2,7 @@ class DoggyDog extends HTMLElement {
   constructor() {
     super();
     this.type = this.getAttribute('type');
-    this.action = this.getAttribute('action');
+    this.command = this.getAttribute('command');
   }
 
   connectedCallback() {
@@ -48,10 +48,16 @@ class DoggyDog extends HTMLElement {
 
     const image = new Image();
     image.src = this.imageURL;
-    image.classList.add(this.action);
+    image.classList.add(this.command);
     this.shadow.appendChild(image);
   }
 
+  /**
+   * Removes the image
+   * 
+   * We do this since someone could technically call `document.querySelector('doggy-dog').setupImage()`
+   * to force a rerender
+   */
   removeExistingImage() {
     const existingImage = this.shadow.querySelector('img');
     if (existingImage) {
