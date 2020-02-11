@@ -5,6 +5,9 @@ class DoggyDog extends HTMLElement {
     this.command = this.getAttribute('command');
   }
 
+  /**
+   * Called when this element is added to the document.
+   */
   connectedCallback() {
     console.log(`Come here, ${this.type}! 🐶`);
     
@@ -13,10 +16,22 @@ class DoggyDog extends HTMLElement {
     this.setupImage();
   }
   
+  /**
+   * Called when this component is removed from the document.
+   */
   disconnectedCallback() {
     console.log('👋 🐶');
   }
 
+  /**
+   * This function is called whenever an attribute we are observing
+   * is updated.  We specify which attributes we want to observe
+   * in `observedAttributes`
+   * 
+   * @param {String} name attribute name (i.e. 'type' or 'command')
+   * @param {String} oldValue the previous value
+   * @param {String} newValue the new value we want
+   */
   attributeChangedCallback(name, oldValue, newValue) {
     if (!this.shadow) {
       return;
@@ -39,6 +54,9 @@ class DoggyDog extends HTMLElement {
     }
   }
 
+  /**
+   * Returns an array of the element attributes we want to observe
+   */
   static get observedAttributes() { 
     return ['type', 'command']; 
   }
