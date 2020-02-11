@@ -5,16 +5,60 @@ class DoggyDog extends HTMLElement {
     this.command = this.getAttribute('command');
   }
 
+  /**
+   * Called when this element is added to the document.
+   */
   connectedCallback() {
-    console.log('Come here, pups! 🐶');
+    console.log(`Come here, ${this.type}! 🐶`);
     
     this.shadow = this.attachShadow({ mode: 'open' });
     this.createStyles();
     this.setupImage();
   }
   
+  /**
+   * Called when this component is removed from the document.
+   */
   disconnectedCallback() {
     console.log('👋 🐶');
+  }
+
+  /**
+   * This function is called whenever an attribute we are observing
+   * is updated.  We specify which attributes we want to observe
+   * in `observedAttributes`
+   * 
+   * @param {String} name attribute name (i.e. 'type' or 'command')
+   * @param {String} oldValue the previous value
+   * @param {String} newValue the new value we want
+   */
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (!this.shadow) {
+      return;
+    }
+    const image = this.shadow.querySelector('img');
+    this[name] = newValue;
+    if (name === 'command') {
+      console.warn(`Ok ${this.type}, ${newValue}!`);
+      if (oldValue) {
+        image.classList.remove(oldValue);
+      }
+
+      if (newValue) {
+        image.classList.add(newValue);
+      }
+    } else if (name === 'type') {
+      console.warn(`Come here, ${this.type}!`);
+      this.shadow.removeChild(image);
+      this.setupImage();
+    }
+  }
+
+  /**
+   * Returns an array of the element attributes we want to observe
+   */
+  static get observedAttributes() { 
+    return ['type', 'command']; 
   }
 
   /**
@@ -40,6 +84,12 @@ class DoggyDog extends HTMLElement {
         break;
       case 'floof':
         this.imageURL = 'https://pbs.twimg.com/profile_images/1070961472342155264/2bcbqQvH_400x400.jpg';
+        break;
+      case 'kitty':
+        this.imageURL = 'https://st.depositphotos.com/1606449/3372/i/950/depositphotos_33722805-stock-photo-puppy-wearing-cat-ears-for.jpg';
+        break;
+      case 'bunny':
+        this.imageURL = 'https://petcostumecenter.com/wp-content/uploads/2018/06/dog-bunny-ears.jpg';
         break;
       default:
         this.imageURL = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-dog-royalty-free-image-505534037-1565105327.jpg';
