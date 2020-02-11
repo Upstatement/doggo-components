@@ -17,6 +17,27 @@ class DoggyDog extends HTMLElement {
     console.log('👋 🐶');
   }
 
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (!this.shadow) {
+      return;
+    }
+    const image = this.shadow.querySelector('img');
+    this[name] = newValue;
+    if (name === 'command') {
+      console.warn(`Ok ${this.type}, ${newValue}!`);
+      image.classList.remove(oldValue);
+      image.classList.add(newValue);
+    } else if (name === 'type') {
+      console.warn(`Come here, ${this.type}!`);
+      this.shadow.removeChild(image);
+      this.setupImage();
+    }
+  }
+
+  static get observedAttributes() { 
+    return ['type', 'command']; 
+  }
+
   /**
    * We create the actual image element and append it to our shadow dom
    * We look at the type specified to find the appropriate adorable picture
@@ -48,6 +69,7 @@ class DoggyDog extends HTMLElement {
 
     const image = new Image();
     image.src = this.imageURL;
+    console.log(this.command);
     image.classList.add(this.command);
     this.shadow.appendChild(image);
   }
